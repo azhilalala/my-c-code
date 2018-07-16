@@ -1,0 +1,67 @@
+#include<iostream>  
+using namespace std;  
+#include<cmath>  
+//两个整数求最大值  
+int max(int a, int b)  
+{  
+	if(a==b) return a;          //要先判断a,b是否相等否则函数有缺陷 三个数不好判，所以三个数比较要会调用两个数的！！！   
+	else if (a > b) return a;       //if（）里面的等号是==号！两个等号不是一个！！！
+	else return b;  
+}  
+//三个整数求最大值  
+//其实还可以直接这样调用：max(max(a,b),c) !这样更方便，这是已经有max两个数的函数已经定义的前提下，这种调用的函数数据类型是一样的，符合所调用函数规则
+int max(int a, int b,int c)  
+{  
+	if (a > b)   
+	{  
+		if (a > c) return a;                 //要会用max(max(a,b),c) ！！！  
+		else return c;  
+	}  
+
+	else  
+	{   
+		if (b > c) return b;  
+	    else return c;  
+	}  
+  
+}   
+//两个双精度数求最大值  
+double max(double a, double b)  
+{                                           //e-7这样的格式不对的吧，应该1e-7!
+	if (abs(a - b) < e - 7)  return a;      //双精度数存储是近似存储的，所以比较是不能用==号，要用差的绝对值与很小的数比较如1e-7这样的  
+	else if (a > b) return a;               //注意用到了abs 所以要预先#include<cmath>  
+	else return b;  
+}  
+//三个双精度数求最大值  
+double max(double a, double b, double c)  
+{  
+	if (a > b)  
+	{  
+		if (a > c) return a;  
+		else return c;  
+	}  
+
+	else   
+	{  
+		if (b > c) return b;  
+		else return c;  
+	}  
+
+}  
+
+
+int main() {  
+
+	int a, b, c;  
+	double A, B, C;  
+	cout << "请输入整数a,b,c" << endl;  
+	cin >> a >> b >> c;  
+	cout << "请输入双精度数A,B,C" << endl;  
+	cin >> A >> B >> C;  
+	cout<<"最大值"<<max(a, b)<<endl;  
+	cout << "最大值" <<max(a, b,c)<<endl;  
+	cout << "最大值" << max(A, B) << endl;  
+	cout << "最大值" << max(A,B,C) << endl;  
+  
+	return 0;  
+}  
