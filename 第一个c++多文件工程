@@ -1,0 +1,79 @@
+**************************************************************************************
+//第一部分这是头文件部分client.h
+
+//这个文件用来声明类,注意要将这个文件在头文件文件夹建立而不是在源文件文件夹建立哦！
+
+class client {
+
+
+	static char severname;              // 一个很重要的关键点在于，static数据是静态且不属于public也步属于private的！！
+	static int clientnum;                //就是因为设置成private导致后来出问题
+
+public:
+
+	static void changsevername(char name);      //当时把这个静态函数成员设置成private
+										 	// 导致后面test文件访问这个函数时出错，显示不可访问（但是在client.h已声明）
+	static int  getclientnum();
+      
+
+};                                              //一个点就是 static不是一个对象的数据成员，而是类的共有数据，只能通过静态函数访问
+                                               //而且静态函数要设置成共有的（公共接口），而静态数据单独声明，不再public里面，更不在private里面！
+                                               
+*************************************************************************************************
+//第二部分这是类的实现部分client.cpp
+//这个文件用来实现类
+//实现什么呢？两个函数的具体功能，两个变量的初始值在后面test的主函数main（）之前初始化(静态成员类外初始化！)
+
+
+#include "client.h"                    //!!!注意！ 这个类的实现文件要在类外继续定义，那这个文件开头预处理要先包含类声明的都文件"client.h"!!!
+
+
+//这个是类内的第一个函数，改变用户名
+void client::changsevername(char name) {       
+	client::severname =  name;                              //注意！！！两个类内静态成员使用时要加类名：：才可以！！！注意！！！
+	client::clientnum ++;                                    //每次改变一次用户名就增加一个用户数量
+}
+
+
+//这是类内第二个函数，return型，显示用户个数
+int  client::getclientnum() {
+	return client::clientnum;                                    //记得用类的静态成员数据时要加类名：：引用啊                                        
+}                                                                
+
+
+//类的静态成员函数：
+//类内声明 语法  static void fun();             static 在前
+//类外定义 语法  void 类：：fun（）{}            当作一般函数，要么void要么return，而在函数名之前要加上类名：：表示归属
+
+*********************************************************************************************************
+//这是第三部分测试部分test.cpp
+//这个文件用来测试类，观察相应的成员变量的变化情况
+//记得预处理 #include "自建的类的头文件.h"
+#include "client.h"
+#include<iostream>
+using namespace std;
+
+//在main（）函数之前先初始化两个类内数据成员 clientname 和 clientnum
+char client::severname = 'a';          //字符要带单引号或者双引号否则会报错红底线
+int  client::clientnum = 1;          //一直出错的原因在这里！！！！
+                                //初始化格式也要引用类名：：，不用在static了！！！
+int main() {
+
+	client szx; 
+	                                                            //只能szx.getclientnum！不能szx.clientnum!
+	cout << "当前用户个数为：" << szx.getclientnum() << endl;         //不能通过对象访问类的私有数据成员！只能通过静态函数访问静态数据！！！	
+	                                                         //而类内的静态函数成员通过类的对象访问，就是不能直接用对象访问类内静态数据！
+	szx.changsevername('b');                     //改变用户名 按道理用户个数会增加  形参表里面的单字符还是要加上单引号的
+	 
+	cout << "当前用户个数为：" << szx.getclientnum() << endl;       //显示用户个数直接通过对象不就行了为啥单独设置函数？
+	                                                                            //因为数据成员时静态的，对象不能引用只能通过静态成员，所以
+	return 0;                                                                  //通过对象引用应该会显示无效？
+}
+
+
+//在szx.getclientnum()忘了最后加上括号（）
+//方案：引用函数时都要带上形参表，哪怕是空的，作为一个基础语法的检查原则
+
+//编译后的obj错误  client.obj : error LNK2001: 无法解析的外部符号 "private: static char client::severname" (?severname@client@@0DA)
+//1>client.obj : error LNK2001 : 无法解析的外部符号 "private: static int client::clientnum" (? clientnum@client@@0HA)
+//原因：之前类外定义静态和初始化的时候格式错了，除了类内声明，不该再又static
