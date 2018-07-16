@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+//定义一个类-时钟
+class clock
+{
+public:
+	void settime(int a = 0, int b = 0, int c = 0);                         // 类内函数声明：函数原型
+	void showtime();                                                     //默认形参的方式时候，是在声明的时候给赋值的！
+private:
+	int h, m, s;
+};
+
+//定义函数的具体-----记得格式！要用类名前缀！clock!还有两个冒号！
+void clock::settime(int a, int b, int c)
+{
+	h = a; m = b; s = c;                 //类内私有成员只有类内成员（函数or数据成员）可以访问，用clock::settime函数给h,m,s赋值
+}
+void clock::showtime()               //先void或者指定返回类型 在类+函数名（）{}
+{
+	cout << h << ":" << m << ":" << s << endl;                       //clock::showtime也可以动h,m,s 
+}
+
+//主函数
+int main() {
+	clock mytime;                           //定义个对象
+	mytime.settime(16, 10, 25);             //用对象引用类内函数来赋值
+	mytime.showtime();
+
+	return 0;
+}
