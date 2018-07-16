@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+double fun1(double x, int n)
+{
+	double val=1.0;
+	int i;
+	for (i = 0;i < n; i++)
+	{
+		val *= x;                      //一个数的n次方，关键在于起始值为1.
+	}                                  //然后用1乘以x，多少次？n次！
+	return val;                        //如何实现n次？循环。while、do-while、for(i=0;i<=n;i++)
+}                                      //for循环（）里面用分号；隔开！
+
+  int main() {
+	int n;
+  	double x,y;
+	cout <<"请输入x的值" <<endl;
+	cin >> x;
+	cout << "请输入n的值" << endl;
+	cin >> n;
+	y=fun1(x, n);
+	cout <<"y的值为"<< y;
+
+
+	return 0;
+}
