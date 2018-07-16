@@ -5,7 +5,7 @@ class point {
 
   public: 
 	  point(int a, int b) : x(a), y(b) { count++; cout << "count的值为" << count << endl; }       //构造函数，并且让count+1且输出此时的值
-	  ~point() { count--; cout << "count的值为" << count << endl;}                                                //析构函数
+	  ~point() { count--; cout << "count的值为" << count << endl;}                           //确实再return之前先来析构一下函数    
 	  int getx() { return x;  }
 	  int gety() { return y; }
   private:
