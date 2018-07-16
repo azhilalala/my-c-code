@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+//定义点类，x，y表示点的坐标，count做静态成员记录构造函数和析构函数次数
+class point {
+
+  public: 
+	  point(int a, int b) : x(a), y(b) { count++; cout << "count的值为" << count << endl; }       //构造函数，并且让count+1且输出此时的值
+	  ~point() { count--; cout << "count的值为" << count << endl;}                                                //析构函数
+	  int getx() { return x;  }
+	  int gety() { return y; }
+  private:
+	  int x;
+	  int y;                                                //私有数据成员定义了两个 即点的两个坐标点x,y而count定义成静态成员
+	  static int count;                             //静态成员类内声明 static int 变量名
+
+};
+
+int point::count = 0;                              //静态成员类外定义 int 类::变量名=0；
+
+int main() {
+	
+	point object(3, 5);                            //定义一个点类对象a，并且初始化点的坐标为（3，5）
+	object.getx();
+	object.gety();                                 //用对象调用类内成员函数
+	return 0;
+}
