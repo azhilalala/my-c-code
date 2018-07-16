@@ -1,0 +1,20 @@
+#include<iostream>
+using namespace std;
+int fit(int n)
+{
+	if (n ==1) return 1;                         //关键一在于收敛点，也就是最后的起始点。
+	else {      
+		if (n == 2) return 1;                      //关键二在于还没收敛前的递归方程是怎么样的（n项与n-1项的关系式）
+		else return fit(n - 1) + fit(n - 2);      //用return 两个fit实现递归
+	}
+
+}
+
+
+int main() {
+	int n;
+	cout << "请输入大于0的整数" << endl;
+	cin >> n;                                       //先输入n的值，再代入函数求解斐波那契
+	cout << fit(n);
+	return 0;
+}
