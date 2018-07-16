@@ -20,7 +20,7 @@ int point::count = 0;                              //静态成员类外定义 in
 int main() {
 	
 	point object(3, 5);                            //定义一个点类对象a，并且初始化点的坐标为（3，5）
-	object.getx();
+	object.getx();                                 //注意监视器会显示返回值哦尽管没进一步处理返回的值
 	object.gety();                                 //用对象调用类内成员函数
 	return 0;
 }
