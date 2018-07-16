@@ -1,0 +1,55 @@
+//系统自带arctan函数的，这里只是练习一下如何用函数写arctan
+#include<iostream>
+using namespace std;
+#include<cmath>
+double arctan(double x)
+{
+	double sum = 0;
+	int n = 1;
+	double X = x;
+	double m;
+
+		while (X<1E-15)                      //级数表达式，设置最小项的极限，这样才不会死循环。
+		{
+			n++;
+			X *= x*x*(2*n - 3)/(2 * n - 1);   //中英文输入法的（）不一样（间隔不一样大小），括号较多的数学表达式里面常见错误，但是又不容易发现，以为编辑错误
+			if (n % 2 == 0)                     //最好多设置几个变量来替换一次性的公式，可读性强，也不同意出错，这个是经验，这道题要改
+				sum += -X;                     //数学公式的函数要多练
+			else                               //函数选取的要点是：“用的多的模块！”
+				sum += x;
+		}
+	return sum;
+
+
+}
+
+
+int main() {
+	
+	return 0;
+}
+
+//以下是正确代码
+#include <iostream>
+using namespace std;
+double arctan(double x) {
+	double sqr = x * x;
+	double e = x;
+	double r = 0;
+	int i = 1;
+	while (e / i > 1e-15) {
+		double f = e / i;
+		r = (i % 4 == 1) ? r + f : r - f;
+		e = e * sqr;
+		i += 2;
+	}
+	return r;
+}
+//主程序
+int main() {
+	double a = 16.0 * arctan(1 / 5.0);
+	double b = 4.0 * arctan(1 / 239.0);
+	//注意：因为整数相除结果取整，如果参数写 1/5，1/239，结果就都是 0
+	cout << "PI = " << a - b << endl;
+	return 0;
+}
